@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E42B3FA2CA22C590077FC5F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E42B3F92CA22C590077FC5F /* Constants.swift */; };
 		7ED685372CA221E900CBB69E /* MovieManiaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED685362CA221E900CBB69E /* MovieManiaApp.swift */; };
-		7ED685392CA221E900CBB69E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED685382CA221E900CBB69E /* ContentView.swift */; };
 		7ED6853B2CA221EA00CBB69E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6853A2CA221EA00CBB69E /* Assets.xcassets */; };
 		7ED6853E2CA221EA00CBB69E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED6853D2CA221EA00CBB69E /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E42B3F92CA22C590077FC5F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../../../Constants.swift; sourceTree = "<group>"; };
 		7ED685332CA221E900CBB69E /* MovieMania.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMania.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED685362CA221E900CBB69E /* MovieManiaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieManiaApp.swift; sourceTree = "<group>"; };
-		7ED685382CA221E900CBB69E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7ED6853A2CA221EA00CBB69E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7ED6853D2CA221EA00CBB69E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -32,6 +32,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E42B3F32CA229350077FC5F /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				7ED685362CA221E900CBB69E /* MovieManiaApp.swift */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		7E42B3F42CA2294A0077FC5F /* Features */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		7E42B3F52CA229540077FC5F /* Location */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		7E42B3F62CA22C250077FC5F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7ED6853A2CA221EA00CBB69E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7E42B3F72CA22C2F0077FC5F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		7E42B3F82CA22C450077FC5F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7E42B3FC2CA22C6A0077FC5F /* Helpers */,
+				7E42B3FB2CA22C5D0077FC5F /* Enums */,
+				7E42B3F92CA22C590077FC5F /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7E42B3FB2CA22C5D0077FC5F /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		7E42B3FC2CA22C6A0077FC5F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		7ED6852A2CA221E900CBB69E = {
 			isa = PBXGroup;
 			children = (
@@ -51,9 +112,12 @@
 		7ED685352CA221E900CBB69E /* MovieMania */ = {
 			isa = PBXGroup;
 			children = (
-				7ED685362CA221E900CBB69E /* MovieManiaApp.swift */,
-				7ED685382CA221E900CBB69E /* ContentView.swift */,
-				7ED6853A2CA221EA00CBB69E /* Assets.xcassets */,
+				7E42B3F82CA22C450077FC5F /* Utils */,
+				7E42B3F72CA22C2F0077FC5F /* Networking */,
+				7E42B3F62CA22C250077FC5F /* Resources */,
+				7E42B3F52CA229540077FC5F /* Location */,
+				7E42B3F42CA2294A0077FC5F /* Features */,
+				7E42B3F32CA229350077FC5F /* Supports */,
 				7ED6853C2CA221EA00CBB69E /* Preview Content */,
 			);
 			path = MovieMania;
@@ -137,8 +201,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ED685392CA221E900CBB69E /* ContentView.swift in Sources */,
 				7ED685372CA221E900CBB69E /* MovieManiaApp.swift in Sources */,
+				7E42B3FA2CA22C590077FC5F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
