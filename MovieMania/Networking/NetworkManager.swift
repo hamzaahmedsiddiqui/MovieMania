@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class NetworkManager {
+final class NetworkManager {
     
     private var cancellables = Set<AnyCancellable>()
     static let shared = NetworkManager()

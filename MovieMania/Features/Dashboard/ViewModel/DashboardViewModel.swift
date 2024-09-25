@@ -16,6 +16,7 @@ protocol DashboardViewModel{
     func fetchUpcomingMovies()
     func fetchImage(from url: String)
 }
+// Here protocol is used for easier mocking for unit tests
 
 class DashboardViewModelImplementation: DashboardViewModel,ObservableObject{
     @Published var nowPlayingMovies: [NowPlayingMovies] = []
@@ -39,78 +40,69 @@ class DashboardViewModelImplementation: DashboardViewModel,ObservableObject{
     }
     
     func fetchNowplayingMovies(){
-        self.nowPlayingMoviesApi.nowPlayingMoviesData(pageNo: 1)
-            .sink{ completion in
-                // self?.loading = false
-                switch completion {
-                case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                    print("Finished")
-                }
-                
-            } receiveValue: { exerciseList in
-                self.nowPlayingMovies = exerciseList ?? []
-            }
-            .store(in: &cancellables)
+        fetchMovies(nowPlayingMoviesApi.nowPlayingMoviesData(pageNo: 1)) { [weak self] movies in
+            self?.nowPlayingMovies = movies
+        }
     }
     
     func fetchPopularMovies(){
-        popularMoviesApi.popularMoviesData(pageNo: 1)
-            .sink { completion in
-                switch completion {
-                case .failure(let err):
-                    print("Error: \(err.localizedDescription)")
-                case .finished:
-                    print("Finished Popular Movies")
-                }
-            } receiveValue: { movieList in
-                self.popularMovies = movieList ?? []
-            }
-            .store(in: &cancellables)
+        fetchMovies(popularMoviesApi.popularMoviesData(pageNo: 1)) {[weak self] movies in
+            self?.popularMovies = movies
+        }
     }
     
     func fetchTopRatedMovies() {
-        topRatedMoviesApi.topRatedMoviesData(pageNo: 1)
-            .sink { completion in
-                switch completion {
-                case .failure(let err):
-                    print("Error: \(err.localizedDescription)")
-                case .finished:
-                    print("Finished Top Rated Movies")
-                }
-            } receiveValue: { movieList in
-                self.topRatedMovies = movieList ?? []
-            }
-            .store(in: &cancellables)
+        //        topRatedMoviesApi.topRatedMoviesData(pageNo: 1)
+        //            .sink { completion in
+        //                switch completion {
+        //                case .failure(let err):
+        //                    print("Error: \(err.localizedDescription)")
+        //                case .finished:
+        //                    print("Finished Top Rated Movies")
+        //                }
+        //            } receiveValue: { movieList in
+        //                self.topRatedMovies = movieList ?? []
+        //            }
+        //            .store(in: &cancellables)
+        //
+        //
+        fetchMovies(topRatedMoviesApi.topRatedMoviesData(pageNo: 1)) { [weak self] movies in
+            self?.topRatedMovies = movies
+        }
     }
     
     func fetchUpcomingMovies() {
-        upcomingMoviesApi.upcomingMoviesData(pageNo: 1)
-            .sink { completion in
-                switch completion {
-                case .failure(let err):
-                    print("Error: \(err.localizedDescription)")
-                case .finished:
-                    print("Finished Upcoming Movies")
-                }
-            } receiveValue: { movieList in
-                self.upcomingMovies = movieList ?? []
-            }
-            .store(in: &cancellables)
+        fetchMovies(upcomingMoviesApi.upcomingMoviesData(pageNo: 1)) { [weak self] movies in
+            self?.upcomingMovies = movies
+        }
     }
     
     // Method to fetch an image from a URL
     func fetchImage(from url: String) {
-           NetworkManager.shared.fetchImage(from: url)
-               .sink(receiveCompletion: { completion in
-                   if case let .failure(error) = completion {
-                       print("Error fetching image: \(error)")
-                   }
-               }, receiveValue: { [weak self] image in
-                   self?.fetchedImage = image // Store the fetched image
-               })
-               .store(in: &cancellables)
-       }
+        NetworkManager.shared.fetchImage(from: url)
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    print("Error fetching image: \(error)")
+                }
+            }, receiveValue: { [weak self] image in
+                self?.fetchedImage = image // Store the fetched image
+            })
+            .store(in: &cancellables)
+    }
     
+    // Generic API Fetching Method
+    private func fetchMovies<T: Codable>(_ apiCall: Future<[T]?, Error>, completion: @escaping ([T]) -> Void) {
+        apiCall
+            .sink { completionResult in
+                switch completionResult {
+                case .failure(let err):
+                    print("Error fetching movies: \(err.localizedDescription)")
+                case .finished:
+                    print("Finished fetching movies")
+                }
+            } receiveValue: { moviesList in
+                completion(moviesList ?? [])
+            }
+            .store(in: &cancellables)
+    }
 }

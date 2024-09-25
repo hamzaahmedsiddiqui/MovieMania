@@ -13,7 +13,7 @@ protocol TopRatedMoviesApi{
     func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, Error>
 }
 
-class TopRatedMoviesApiImplementation:TopRatedMoviesApi{
+final class TopRatedMoviesApiImplementation:TopRatedMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
     func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, any Error> {

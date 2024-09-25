@@ -13,7 +13,7 @@ protocol NowPlayingMoviesApi{
     func nowPlayingMoviesData(pageNo page:Int?) -> Future<[NowPlayingMovies]?, Error>
 }
 
-class NowPlayingMoviesApiImplementation:NowPlayingMoviesApi{
+final class NowPlayingMoviesApiImplementation:NowPlayingMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
     func nowPlayingMoviesData(pageNo page:Int?) -> Future<[NowPlayingMovies]?, any Error> {

@@ -13,7 +13,7 @@ protocol UpcomingMoviesApi{
     func upcomingMoviesData(pageNo page:Int?) -> Future<[UpcomingMovies]?, Error>
 }
 
-class UpcomingMoviesApiImplementation:UpcomingMoviesApi{
+final class UpcomingMoviesApiImplementation:UpcomingMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
     func upcomingMoviesData(pageNo page:Int?) -> Future<[UpcomingMovies]?, any Error> {
