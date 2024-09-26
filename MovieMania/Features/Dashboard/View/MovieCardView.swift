@@ -14,10 +14,14 @@ struct MovieCardView: View {
     
     var body: some View {
         VStack {
-            MovieImageView(imagePath: posterPath ?? "")
-                .frame(width: 100, height: 150)
-                .cornerRadius(10)
-                .shadow(color: .black.opacity(0.5), radius: 2, x: 2, y: 2)
+            AsyncImage(url: URL(string: Constants.baseUrlImage500 + posterPath!)){ image in
+                image
+                    .image?.resizable()// Make the image resizable
+                    .scaledToFit()
+                    .frame(width: 100, height: 150)
+                    .cornerRadius(10)
+                    .shadow(color: .black.opacity(0.5), radius: 2, x: 2, y: 2)
+            }
             Text(movieTitle)
                 .font(.caption)
                 .multilineTextAlignment(.center)

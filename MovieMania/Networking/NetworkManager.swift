@@ -28,7 +28,7 @@ final class NetworkManager {
             }
             print("Requesting URL: \(url.absoluteString)")
             
-            // Execute the data task
+            // Execute the dasta task
             URLSession.shared.dataTaskPublisher(for: getAuthenticateUrlRequest(url: url, HttpMethod: httpMethod))
                 .tryMap { (data, response) -> Data in
                     // Validate the HTTP response status
@@ -61,34 +61,34 @@ final class NetworkManager {
     
     
     // New method to fetch an image
-       func fetchImage(from url: String) -> Future<Image, Error> {
-           return Future<Image, Error> { [weak self] promise in
-          
-               guard let self = self, let imageURL = URL(string: Constants.baseUrlImage500 + url) else {
-                   return promise(.failure(NetworkError.invalidURL))
-               }
-               print("Requesting URL: \(imageURL)")
-               URLSession.shared.dataTaskPublisher(for: getAuthenticateUrlRequest(url: imageURL, HttpMethod: "GET"))
-                   .map { $0.data } // Get the data from the response
-                   .tryMap { data in
-                       // Create UIImage from the data
-                       guard let uiImage = UIImage(data: data) else {
-                           throw NetworkError.responseError // Handle error if image cannot be created
-                       }
-                       return uiImage
-                   }
-                   .map { Image(uiImage: $0) } // Convert to SwiftUI Image
-                   .receive(on: DispatchQueue.main)
-                   .sink(receiveCompletion: { completion in
-                       if case let .failure(error) = completion {
-                           promise(.failure(error))
-                       }
-                   }, receiveValue: { image in
-                       promise(.success(image)) // Return the fetched image
-                   })
-                   .store(in: &self.cancellables)
-           }
-       }
+//       func fetchImage(from url: String) -> Future<Image, Error> {
+//           return Future<Image, Error> { [weak self] promise in
+//          
+//               guard let self = self, let imageURL = URL(string: Constants.baseUrlImage500 + url) else {
+//                   return promise(.failure(NetworkError.invalidURL))
+//               }
+//               print("Requesting URL: \(imageURL)")
+//               URLSession.shared.dataTaskPublisher(for: getAuthenticateUrlRequest(url: imageURL, HttpMethod: "GET"))
+//                   .map { $0.data } // Get the data from the response
+//                   .tryMap { data in
+//                       // Create UIImage from the data
+//                       guard let uiImage = UIImage(data: data) else {
+//                           throw NetworkError.responseError // Handle error if image cannot be created
+//                       }
+//                       return uiImage
+//                   }
+//                   .map { Image(uiImage: $0) } // Convert to SwiftUI Image
+//                   .receive(on: DispatchQueue.main)
+//                   .sink(receiveCompletion: { completion in
+//                       if case let .failure(error) = completion {
+//                           promise(.failure(error))
+//                       }
+//                   }, receiveValue: { image in
+//                       promise(.success(image)) // Return the fetched image
+//                   })
+//                   .store(in: &self.cancellables)
+//           }
+  //     }
     
     
     private func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest {

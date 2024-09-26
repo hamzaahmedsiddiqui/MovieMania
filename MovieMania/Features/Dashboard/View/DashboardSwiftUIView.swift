@@ -11,6 +11,7 @@ struct DashboardSwiftUIView: View {
     var body: some View {
         TabView {
             ZStack {
+                
                 GradientView(firstColor: .red, secondColor: .purple, thirdColor: .blue)
                 ScrollView(.vertical) {
                     VStack(alignment: .leading) {
