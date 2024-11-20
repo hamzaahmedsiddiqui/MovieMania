@@ -21,6 +21,6 @@ struct GradientView: View {
     }
 }
 
-//#Preview {
-//    GradientView()
-//}
+#Preview {
+    GradientView(firstColor: .red, secondColor: .blue, thirdColor: .green)
+}

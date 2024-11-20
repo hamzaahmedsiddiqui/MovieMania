@@ -20,6 +20,6 @@ struct MovieSectionTitleView: View {
 }
 
 
-//#Preview {
-//    MovieSectionTitleView()
-//}
+#Preview {
+    MovieSectionTitleView(title: "avengers", fontSize: 15)
+}

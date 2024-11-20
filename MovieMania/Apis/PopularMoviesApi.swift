@@ -1,27 +1,27 @@
 //
-//  TopRatedMoviesApi.swift
+//  NowPlayingApi.swift
 //  MovieMania
 //
-//  Created by hamza Ahmed on 2024-09-25.
+//  Created by hamza Ahmed on 2024-09-24.
 //
 
 import Foundation
 import Combine
 
 
-protocol TopRatedMoviesApi{
-    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, Error>
+protocol PopularMoviesApi{
+    func popularMoviesData(pageNo page:Int?) -> Future<[PopularMovies]?, Error>
 }
 
-final class TopRatedMoviesApiImplementation:TopRatedMoviesApi{
+final class PopularMoviesApiImplementation:PopularMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
-    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, any Error> {
-        return Future<[TopRatedMovies]?, Error> { [weak self] promise in
+    func popularMoviesData(pageNo page:Int?) -> Future<[PopularMovies]?, any Error> {
+        return Future<[PopularMovies]?, Error> { [weak self] promise in
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }
-            NetworkManager.shared.getRequest(endpoint: .topRatedMovies, type: TopRatedMoviesModel.self)
+            NetworkManager.shared.getRequest(endpoint: .popularMovies, type: PopularMoviesModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):

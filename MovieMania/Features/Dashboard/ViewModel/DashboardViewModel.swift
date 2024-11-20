@@ -14,7 +14,7 @@ protocol DashboardViewModel{
     func fetchPopularMovies()
     func fetchTopRatedMovies()
     func fetchUpcomingMovies()
-    func fetchImage(from url: String)
+ //   func fetchImage(from url: String)
 }
 // Here protocol is used for easier mocking for unit tests
 
@@ -52,20 +52,6 @@ class DashboardViewModelImplementation: DashboardViewModel,ObservableObject{
     }
     
     func fetchTopRatedMovies() {
-        //        topRatedMoviesApi.topRatedMoviesData(pageNo: 1)
-        //            .sink { completion in
-        //                switch completion {
-        //                case .failure(let err):
-        //                    print("Error: \(err.localizedDescription)")
-        //                case .finished:
-        //                    print("Finished Top Rated Movies")
-        //                }
-        //            } receiveValue: { movieList in
-        //                self.topRatedMovies = movieList ?? []
-        //            }
-        //            .store(in: &cancellables)
-        //
-        //
         fetchMovies(topRatedMoviesApi.topRatedMoviesData(pageNo: 1)) { [weak self] movies in
             self?.topRatedMovies = movies
         }
@@ -77,19 +63,7 @@ class DashboardViewModelImplementation: DashboardViewModel,ObservableObject{
         }
     }
     
-    // Method to fetch an image from a URL
-    func fetchImage(from url: String) {
-        NetworkManager.shared.fetchImage(from: url)
-            .sink(receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    print("Error fetching image: \(error)")
-                }
-            }, receiveValue: { [weak self] image in
-                self?.fetchedImage = image // Store the fetched image
-            })
-            .store(in: &cancellables)
-    }
-    
+
     // Generic API Fetching Method
     private func fetchMovies<T: Codable>(_ apiCall: Future<[T]?, Error>, completion: @escaping ([T]) -> Void) {
         apiCall

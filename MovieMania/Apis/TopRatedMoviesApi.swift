@@ -1,5 +1,5 @@
 //
-//  UpcomingMoviesApi.swift
+//  TopRatedMoviesApi.swift
 //  MovieMania
 //
 //  Created by hamza Ahmed on 2024-09-25.
@@ -9,19 +9,19 @@ import Foundation
 import Combine
 
 
-protocol UpcomingMoviesApi{
-    func upcomingMoviesData(pageNo page:Int?) -> Future<[UpcomingMovies]?, Error>
+protocol TopRatedMoviesApi{
+    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, Error>
 }
 
-final class UpcomingMoviesApiImplementation:UpcomingMoviesApi{
+final class TopRatedMoviesApiImplementation:TopRatedMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
-    func upcomingMoviesData(pageNo page:Int?) -> Future<[UpcomingMovies]?, any Error> {
-        return Future<[UpcomingMovies]?, Error> { [weak self] promise in
+    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, any Error> {
+        return Future<[TopRatedMovies]?, Error> { [weak self] promise in
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }
-            NetworkManager.shared.getRequest(endpoint: .upcomingMovies, type: UpcomingMoviesModel.self)
+            NetworkManager.shared.getRequest(endpoint: .topRatedMovies, type: TopRatedMoviesModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):
