@@ -10,14 +10,14 @@ import Combine
 
 
 protocol NowPlayingMoviesApi{
-    func nowPlayingMoviesData(pageNo page:Int?) -> Future<[NowPlayingMovies]?, Error>
+    func nowPlayingMoviesData(pageNo page:Int?) -> Future<[Movie]?, Error>
 }
 
 final class NowPlayingMoviesApiImplementation:NowPlayingMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
-    func nowPlayingMoviesData(pageNo page:Int?) -> Future<[NowPlayingMovies]?, any Error> {
-        return Future<[NowPlayingMovies]?, Error> { [weak self] promise in
+    func nowPlayingMoviesData(pageNo page:Int?) -> Future<[Movie]?, any Error> {
+        return Future<[Movie]?, Error> { [weak self] promise in
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }

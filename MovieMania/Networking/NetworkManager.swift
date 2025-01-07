@@ -7,35 +7,26 @@
 
 import Foundation
 import Combine
-import SwiftUI
 
 protocol NetworkManagerProtocol{
     func getRequest<T: Codable>(endpoint: Endpoints,type: T.Type,httpMethod: String?) -> Future<T, Error>
-    func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest
 }
 
-
-
 final class NetworkManager:NetworkManagerProtocol {
-
-    
-    
     private var cancellables = Set<AnyCancellable>()
     static let shared = NetworkManager()
- //   private init() {}
     
- //   @Published var fetchedImage: Image? // Store the fetched image
-    // Generic GET request with optional Authorization header
     func getRequest<T: Codable>(endpoint: Endpoints,
-                                //parameters: [String: Any]? = nil,
                                 type: T.Type,
                                 httpMethod: String?
     ) -> Future<T, Error> {
-        return Future<T, Error> { [weak self] promise in
-            guard let self = self, let url = endpoint.url(page: 1) else {
+        return Future<T, Error> {[weak self] promise in
+            guard let self = self,
+                  let url = endpoint.url(page: 1)
+            else {
                 return promise(.failure(NetworkError.invalidURL))
             }
-            print("Requesting URL: \(url.absoluteString)")
+           print("Requesting URL: \(url.absoluteString)")
             
             // Execute the dasta task
             URLSession.shared.dataTaskPublisher(for: getAuthenticateUrlRequest(url: url, HttpMethod: httpMethod ?? "GET"))
@@ -68,7 +59,7 @@ final class NetworkManager:NetworkManagerProtocol {
         }
     }
     
-     func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest {
+     private func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest {
         
         var request = URLRequest(url: url)
         request.httpMethod = HttpMethod ?? "GET"

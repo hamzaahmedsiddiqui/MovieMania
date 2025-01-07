@@ -10,14 +10,14 @@ import Combine
 
 
 protocol TopRatedMoviesApi{
-    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, Error>
+    func topRatedMoviesData(pageNo page:Int?) -> Future<[Movie]?, Error>
 }
 
 final class TopRatedMoviesApiImplementation:TopRatedMoviesApi{
     private var cancellables = Set<AnyCancellable>()
 
-    func topRatedMoviesData(pageNo page:Int?) -> Future<[TopRatedMovies]?, any Error> {
-        return Future<[TopRatedMovies]?, Error> { [weak self] promise in
+    func topRatedMoviesData(pageNo page:Int?) -> Future<[Movie]?, any Error> {
+        return Future<[Movie]?, Error> { [weak self] promise in
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }

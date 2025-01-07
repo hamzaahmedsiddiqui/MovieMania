@@ -17,7 +17,7 @@ struct GradientView: View {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.top)
     }
 }
 

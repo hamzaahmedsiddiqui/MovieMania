@@ -1,7 +1,8 @@
+
 import SwiftUI
 
 struct DashboardView: View {
-    @StateObject var viewModel = DashboardViewModelImplementation(
+    @StateObject var viewModel = DashboardViewModel(
         nowPlayingMoviesApi: NowPlayingMoviesApiImplementation(),
         popularMoviesApi: PopularMoviesApiImplementation(),
         topRatedMoviesApi: TopRatedMoviesApiImplementation(),
@@ -9,95 +10,50 @@ struct DashboardView: View {
     )
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-
-            TabView {
-                ZStack {
-                    GradientView(firstColor: .red, secondColor: .purple, thirdColor: .blue)
-                    ScrollView(.vertical,showsIndicators: false) {
-                        VStack(alignment: .leading) {
-                            // Now Playing Movies Section
-                            MovieSectionTitleView(title: "Now Playing", fontSize: 24)
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(viewModel.nowPlayingMovies) { movie in
-                                        MovieCardView(posterPath: movie.posterPath, movieTitle: movie.title)
-                                    }
-                                }
-                            }.background(Color.clear)
-                            .frame(height: 200)
-                            
-                            // Popular Movies Section
-                            MovieSectionTitleView(title: "Popular Movies", fontSize: 24)
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(viewModel.popularMovies) { movie in
-                                        MovieCardView(posterPath: movie.posterPath, movieTitle: movie.title)
-                                    }
-                                }
-                            }
-                            .frame(height: 200)
-                            .background(Color.clear)
-                            
-                            // Top Rated Movies Section
-                            MovieSectionTitleView(title: "Top Rated Movies", fontSize: 24)
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(viewModel.topRatedMovies) { movie in
-                                        MovieCardView(posterPath: movie.posterPath, movieTitle: movie.title)
-                                    }
-                                }
-                            }
-                            .frame(height: 200)
-                            .background(Color.clear)
-                            
-                            // Upcoming Movies Section
-                            MovieSectionTitleView(title: "Upcoming Movies", fontSize: 24)
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(viewModel.upcomingMovies) { movie in
-                                        MovieCardView(posterPath: movie.posterPath, movieTitle: movie.title)
-                                    }
-                                }
-                            }
-                            .frame(height: 200)
-                            .background(Color.clear)
-                        }.background(Color.clear)
-                    }.background(Color.clear)
-                    .padding()
-                    .onAppear {
-                        viewModel.fetchNowplayingMovies()
-                        viewModel.fetchPopularMovies()
-                        viewModel.fetchTopRatedMovies()
-                        viewModel.fetchUpcomingMovies()
-                    }
-                }.background(Color.clear)
-                .tabItem {
-                    Image(systemName: "chart.bar")
-                    Text("Dashboard")
-                }
-            
+        NavigationStack {
+            ZStack {
+                // Background View
+                GradientView(firstColor: .red, secondColor: .purple, thirdColor: .blue)
                 
-                Text( "SearchView")
-                    .tabItem {
-                        Label("Search", systemImage: "magnifyingglass")
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        // Now Playing Movies Section
+                        MovieSection(title: "Now Playing", movies: viewModel.state.nowPlayingMovies)
+                        
+                        // Popular Movies Section
+                        MovieSection(title: "Popular Movies", movies: viewModel.state.popularMovies)
+                        
+                        // Top Rated Movies Section
+                        MovieSection(title: "Top Rated Movies", movies: viewModel.state.topRatedMovies)
+                        
+                        // Upcoming Movies Section
+                        MovieSection(title: "Upcoming Movies", movies: viewModel.state.upcomingMovies)
                     }
-
-                Text("SettingsView")
-                    .tabItem {
-                        Label("Settings", systemImage: "gearshape")
-                    }
-                Text( "Profile")
-                    .tabItem {
-                        Label("Search", systemImage: "magnifyingglass")
-                    }
+                }
+                .padding()
             }
-            .background(Color.clear) // Clear to show custom background
+            .navigationTitle("Dashboard")
         }
-
     }
 }
 
-#Preview {
-    DashboardView()
+/// Movie Section View with Navigation
+struct MovieSection: View {
+    let title: String
+    let movies: [Movie]
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            MovieSectionTitleView(title: title, fontSize: 24)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(movies) { movie in
+                        NavigationLink(destination: MovieDetailView(movieID: movie.id)) {
+                            MovieCardView(movie: movie)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

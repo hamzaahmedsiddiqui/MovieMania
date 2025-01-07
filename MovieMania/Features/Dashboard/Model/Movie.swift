@@ -5,6 +5,8 @@
 //  Created by hamza Ahmed on 2024-11-22.
 //
 
+import Foundation
+
 
 struct Movie: Codable,Identifiable {
     let id: Int
@@ -22,8 +24,7 @@ struct Movie: Codable,Identifiable {
 
 
 
-let movies = [
-    Movie(id: UUID(), title: "Inception", description: "A mind-bending thriller."),
-    Movie(id: UUID(), title: "Interstellar", description: "An epic space journey."),
-    Movie(id: UUID(), title: "The Dark Knight", description: "A gritty superhero movie.")
+let mockMovies = [
+    Movie(id: 2, posterPath: "/vr6n6ZFUZvedvIlhfYcbCWcaKyW.jpg", title: "Interstellar Interstellar"),
+    Movie(id: 6,  posterPath: "/vr6n6ZFUZvedvIlhfYcbCWcaKyW.jpg",title: "The Dark Knight")
 ]

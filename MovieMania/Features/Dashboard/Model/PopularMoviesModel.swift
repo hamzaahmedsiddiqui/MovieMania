@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Welcome
 struct PopularMoviesModel: Codable {
     let page: Int
-    let results: [PopularMovies]
+    let results: [Movie]
     let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
@@ -20,17 +20,4 @@ struct PopularMoviesModel: Codable {
     }
 }
 
-// MARK: - PopularMovies Result
-struct PopularMovies: Codable,Identifiable {
-    let id: Int
-    let posterPath: String
-    let title: String
-
-    // Map the JSON keys to your struct properties
-    enum CodingKeys: String, CodingKey {
-        case id
-        case posterPath = "poster_path" // Maps "poster_path" from JSON to "posterPath"
-        case title
-    }
-}
 
