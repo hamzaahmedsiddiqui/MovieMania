@@ -42,11 +42,6 @@ enum Endpoints {
               ]
         }
             
-//        let queryItems = [
-//            URLQueryItem(name: "language", value: "en-US"),
-//            URLQueryItem(name: "page", value: "\(page)")
-//        ]
-        
         var components = URLComponents(string: baseUrl + path)
         components?.queryItems = queryItems
         
