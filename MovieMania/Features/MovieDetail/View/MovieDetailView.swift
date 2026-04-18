@@ -18,6 +18,7 @@ struct MovieDetailView: View {
     }
     
     var body: some View {
+        
         if viewModel.state.noMovieFound{
             Text("No movie details found")
         } else {
@@ -26,20 +27,15 @@ struct MovieDetailView: View {
                     MovieHeaderView(
                         movieTitle: viewModel.state.movieDetail?.title ?? "",
                         ageRating: viewModel.state.movieDetail?.adult ?? false,
-                        posterPath: viewModel.state.movieDetail?.posterPath ?? ""
+                        backdropPath: viewModel.state.movieDetail?.backdropPath ?? "",
+                        runtime: viewModel.state.movieDetail?.runtime ?? 0
                     )
+                    
                     HStack {
-                        Label(String(viewModel.state.movieDetail?.runtime ?? 0) + "minutes", systemImage: "timer")
-                            .font(.caption)
+                        Text("Movie: " + (viewModel.state.movieDetail?.title ?? "Unknown"))
                             .fontWeight(.bold)
-                            .foregroundColor(.red)
-                        
+                            .font(.headline)
                         Spacer()
-                        Button {
-                            print("Like button pressed for movieID: \(movieID)")
-                        } label: {
-                            Image(systemName: "heart")
-                        }
                     }
                     .padding(.horizontal)
                     
@@ -47,9 +43,15 @@ struct MovieDetailView: View {
                         Text("Release Date: \(viewModel.state.movieDetail?.releaseDate ?? "")")
                             .font(.caption)
                             .fontWeight(.bold)
+                            .foregroundColor(Color.gray)
                         Spacer()
                     }
-                    .padding()
+                    .padding([.horizontal])
+                    Label(String(viewModel.state.movieDetail?.runtime ?? 0) + "minutes", systemImage: "timer")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.red)
+                        .padding([.horizontal])
                     
                     HStack {
                         Text("Genres:")

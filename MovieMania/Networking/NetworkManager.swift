@@ -14,7 +14,8 @@ protocol NetworkManagerProtocol{
 
 final class NetworkManager:NetworkManagerProtocol {
     private var cancellables = Set<AnyCancellable>()
-    static let shared = NetworkManager()
+    static let shared = NetworkManager() // Singleton instance
+    private init() { } // Prevents multiple instances
     
     func getRequest<T: Codable>(endpoint: Endpoints,
                                 type: T.Type,
@@ -22,11 +23,11 @@ final class NetworkManager:NetworkManagerProtocol {
     ) -> Future<T, Error> {
         return Future<T, Error> {[weak self] promise in
             guard let self = self,
-                  let url = endpoint.url(page: 1)
+                  let url = endpoint.url(page:1)
             else {
                 return promise(.failure(NetworkError.invalidURL))
             }
-           print("Requesting URL: \(url.absoluteString)")
+            print("Requesting URL: \(url.absoluteString)")
             
             // Execute the dasta task
             URLSession.shared.dataTaskPublisher(for: getAuthenticateUrlRequest(url: url, HttpMethod: httpMethod ?? "GET"))
@@ -59,7 +60,7 @@ final class NetworkManager:NetworkManagerProtocol {
         }
     }
     
-     private func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest {
+    private func getAuthenticateUrlRequest(url:URL, HttpMethod:String?) ->URLRequest {
         
         var request = URLRequest(url: url)
         request.httpMethod = HttpMethod ?? "GET"

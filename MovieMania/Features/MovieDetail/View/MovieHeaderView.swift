@@ -2,60 +2,79 @@
 //  MovieHeaderView.swift
 //  MovieMania
 //
-//  Created by hamza Ahmed on 2024-12-31.
+//  Created by Hamza Ahmed on 2024-12-31.
 //
 
 import SwiftUI
 
 struct MovieHeaderView: View {
     var movieTitle: String
-    var ageRating: Bool = true
-    var posterPath: String
+    var ageRating: Bool
+    var backdropPath: String
+    var runtime: Int
     
     var body: some View {
-        ZStack {
-            AsyncImage(url: URL(string: Constants.baseUrlImage500 + (posterPath))){ image in
-                if let image = image.image{
+        ZStack(alignment: .bottom) {
+            // Background Image
+            
+            AsyncImage(url: URL(string: Constants.baseUrlImage500 + backdropPath)) { phase in
+                switch phase {
+                case .success(let image):
                     image
                         .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
-                        .padding()
-                } else {
-                    Color.blue // Acts as a placeholder.
+                        .scaledToFill() // Ensures the image covers the entire frame
+                        .clipped()
+                case .failure:
+                    Color.gray // Placeholder if image fails to load
+                case .empty:
+                    ProgressView() // Loading indicator
+                @unknown default:
+                    Color.gray
                 }
-            }
-            VStack {
+            }            
+            // Content Overlay
+            VStack(spacing: 10) {
                 if ageRating {
                     HStack {
                         Text("18+")
                             .font(.caption)
                             .fontWeight(.bold)
-                            .foregroundColor(.red)
-                            .padding(30)
+                            .foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.red)
+                            .cornerRadius(5)
+                            .padding(.leading, 16)
                         Spacer()
                     }
                 }
                 Spacer()
-                Text(movieTitle)
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [Color.red, Color.orange, Color.yellow],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .shadow(color: .black.opacity(0.7), radius: 5, x: 0, y: 10)
-                    .padding(.horizontal)
-                    .padding(.vertical, 20)
+                HStack {
+//                    Label(String(runtime) + "minutes", systemImage: "timer")
+//                        .font(.caption)
+//                        .fontWeight(.bold)
+//                        .foregroundColor(.red)
+                    
+                    Spacer()
+                    Button {
+                        //print("Like button pressed for movieID: \(movieID)")
+                    } label: {
+                        Image(systemName: "heart")
+                    }
+                }
+                .padding(.horizontal)
             }
+            .padding(.bottom, 16)
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.black.opacity(0.8)) // Fallback background
     }
 }
 
-//#Preview {
-//    MovieHeaderView(movieTitle: "Movie Title", ageRating: "18+", imageName: "demoImage")
-//}
+#Preview {
+    MovieHeaderView(
+        movieTitle: "Movie Title",
+        ageRating: true,
+        backdropPath: "/vr6n6ZFUZvedvIlhfYcbCWcaKyW.jpg",
+        runtime: 123
+    )
+}

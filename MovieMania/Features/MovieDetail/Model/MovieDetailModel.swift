@@ -15,10 +15,10 @@ struct MovieDetailModel: Codable {
     let id: Int
     let originCountry: [String]?
     let originalLanguage, originalTitle, overview: String?
-    let posterPath: String?
+    let posterPath,backdropPath  : String?
     let releaseDate: String?
     let runtime: Int?
-    let title: String
+    let title: String 
     let video: Bool
 
     enum CodingKeys: String, CodingKey {
@@ -28,6 +28,7 @@ struct MovieDetailModel: Codable {
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case overview
+        case backdropPath = "backdrop_path"
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case runtime

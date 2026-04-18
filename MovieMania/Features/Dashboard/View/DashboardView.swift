@@ -18,16 +18,16 @@ struct DashboardView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading) {
                         // Now Playing Movies Section
-                        MovieSection(title: "Now Playing", movies: viewModel.state.nowPlayingMovies)
+                        MovieSection(title: .nowPlaying, movies: viewModel.state.nowPlayingMovies, viewModel: viewModel)
                         
                         // Popular Movies Section
-                        MovieSection(title: "Popular Movies", movies: viewModel.state.popularMovies)
+                        MovieSection(title: .popular, movies: viewModel.state.popularMovies, viewModel: viewModel)
                         
                         // Top Rated Movies Section
-                        MovieSection(title: "Top Rated Movies", movies: viewModel.state.topRatedMovies)
+                        MovieSection(title: .topRated, movies: viewModel.state.topRatedMovies, viewModel: viewModel)
                         
                         // Upcoming Movies Section
-                        MovieSection(title: "Upcoming Movies", movies: viewModel.state.upcomingMovies)
+                        MovieSection(title: .upcoming, movies: viewModel.state.upcomingMovies, viewModel: viewModel)
                     }
                 }
                 .padding()
@@ -39,12 +39,13 @@ struct DashboardView: View {
 
 /// Movie Section View with Navigation
 struct MovieSection: View {
-    let title: String
+    let title: MovieSectionType
     let movies: [Movie]
+    let viewModel: DashboardViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
-            MovieSectionTitleView(title: title, fontSize: 24)
+            MovieSectionTitleView(title: title.rawValue, fontSize: 24)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(movies) { movie in
@@ -54,6 +55,19 @@ struct MovieSection: View {
                     }
                 }
             }
+            .onChange(of: movies.last) { lastMovie in
+                guard let lastMovie = lastMovie else { return }
+                if movies.firstIndex(of: lastMovie) == movies.count - 1 {
+                    viewModel.fetchNowPlayingMovies(pageNo: 2)
+                }
+            }
         }
     }
+}
+
+enum MovieSectionType:String {
+    case popular    =  "Popular Movies"
+    case topRated   =  "Top Rated Movies"
+    case upcoming   =  "Upcoming Movies"
+    case nowPlaying =  "Now Playing Movies"
 }

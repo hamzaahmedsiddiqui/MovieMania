@@ -53,29 +53,29 @@ class DashboardViewModel: ObservableObject {
     }
     
     /// Fetch now-playing movies
-    private func fetchNowPlayingMovies() {
-        fetchMovies(from: nowPlayingMoviesApi.nowPlayingMoviesData(pageNo: 1)) { [weak self] movies in
+    func fetchNowPlayingMovies(pageNo: Int = 1) {
+        fetchMovies(from: nowPlayingMoviesApi.nowPlayingMoviesData(pageNo: pageNo)) { [weak self] movies in
             self?.state.nowPlayingMovies = movies
         }
     }
     
     /// Fetch popular movies
-    private func fetchPopularMovies() {
-        fetchMovies(from: popularMoviesApi.popularMoviesData(pageNo: 1)) { [weak self] movies in
+    private func fetchPopularMovies(pageNo: Int = 1) {
+        fetchMovies(from: popularMoviesApi.popularMoviesData(pageNo: pageNo)) { [weak self] movies in
             self?.state.popularMovies = movies
         }
     }
     
     /// Fetch top-rated movies
-    private func fetchTopRatedMovies() {
-        fetchMovies(from: topRatedMoviesApi.topRatedMoviesData(pageNo: 1)) { [weak self] movies in
+    private func fetchTopRatedMovies(pageNo: Int = 1) {
+        fetchMovies(from: topRatedMoviesApi.topRatedMoviesData(pageNo: pageNo)) { [weak self] movies in
             self?.state.topRatedMovies = movies
         }
     }
     
     /// Fetch upcoming movies
-    private func fetchUpcomingMovies() {
-        fetchMovies(from: upcomingMoviesApi.upcomingMoviesData(pageNo: 1)) { [weak self] movies in
+    private func fetchUpcomingMovies(pageNo: Int = 1) {
+        fetchMovies(from: upcomingMoviesApi.upcomingMoviesData(pageNo: pageNo)) { [weak self] movies in
             self?.state.upcomingMovies = movies
         }
     }
