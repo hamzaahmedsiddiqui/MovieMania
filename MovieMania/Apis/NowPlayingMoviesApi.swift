@@ -22,7 +22,7 @@ final class NowPlayingMoviesApiImplementation:NowPlayingMoviesApi{
                 return promise(.failure(NetworkError.unknown))
             }
             
-            NetworkManager.shared.getRequest(endpoint: .nowPlayingMovies, type: NowPlayingMoviesModel.self, httpMethod: "GET")
+            NetworkManager.shared.getRequest(endpoint: .nowPlayingMovies(page: 1), type: NowPlayingMoviesModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):

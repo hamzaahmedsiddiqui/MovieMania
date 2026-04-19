@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol NetworkManagerProtocol{
-    func getRequest<T: Codable>(endpoint: Endpoints,type: T.Type,httpMethod: String?) -> Future<T, Error>
+    func getRequest<T: Codable>(endpoint: Endpoint,type: T.Type,httpMethod: String?) -> Future<T, Error>
 }
 
 final class NetworkManager:NetworkManagerProtocol {
@@ -17,13 +17,13 @@ final class NetworkManager:NetworkManagerProtocol {
     static let shared = NetworkManager() // Singleton instance
     private init() { } // Prevents multiple instances
     
-    func getRequest<T: Codable>(endpoint: Endpoints,
+    func getRequest<T: Codable>(endpoint: Endpoint,
                                 type: T.Type,
                                 httpMethod: String?
     ) -> Future<T, Error> {
         return Future<T, Error> {[weak self] promise in
             guard let self = self,
-                  let url = endpoint.url(page:1)
+                  let url = endpoint.url()
             else {
                 return promise(.failure(NetworkError.invalidURL))
             }

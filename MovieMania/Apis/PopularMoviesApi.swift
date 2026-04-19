@@ -21,7 +21,7 @@ final class PopularMoviesApiImplementation:PopularMoviesApi{
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }
-            NetworkManager.shared.getRequest(endpoint: .popularMovies, type: PopularMoviesModel.self, httpMethod: "GET")
+            NetworkManager.shared.getRequest(endpoint: .popularMovies(page: 1), type: PopularMoviesModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):

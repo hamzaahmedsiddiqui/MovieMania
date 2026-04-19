@@ -21,7 +21,7 @@ final class UpcomingMoviesApiImplementation:UpcomingMoviesApi{
             guard let self = self  else {
                 return promise(.failure(NetworkError.unknown))
             }
-            NetworkManager.shared.getRequest(endpoint: .upcomingMovies, type: UpcomingMoviesModel.self, httpMethod: "GET")
+            NetworkManager.shared.getRequest(endpoint: .upcomingMovies(page: 1), type: UpcomingMoviesModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):
