@@ -22,7 +22,7 @@ final class MovieDetailApiImplementation:MovieDetailApi{
             }
             
             
-            NetworkManager.shared.getRequest(endpoint: .movieDetails(moviedId: movieId), type: MovieDetailModel.self, httpMethod: "GET")
+            NetworkManager.shared.getRequest(endpoint: .movieDetails(id: movieId), type: MovieDetailModel.self, httpMethod: "GET")
                 .sink { completion in
                     switch completion{
                     case .failure(let err):

@@ -12,7 +12,7 @@ enum Endpoints {
     case popularMovies
     case topRatedMovies
     case upcomingMovies
-    case movieDetails(moviedId:Int)
+    case movieDetails(id:Int)
     
     func url(page:Int = 0, moviedId:Int = 0) -> URL? {
         var path: String
@@ -27,13 +27,13 @@ enum Endpoints {
             path = "/top_rated"
         case .upcomingMovies:
             path = "/upcoming"
-        case .movieDetails(let moviedId):
-            path = "/\(moviedId)"
+        case .movieDetails(let id):
+            path = "/\(id)"
         }
         
         var queryItems: [URLQueryItem] = []
         switch self {
-        case .movieDetails(let moviedId):
+        case .movieDetails(_):
             break
         default :
             queryItems = [
@@ -42,6 +42,7 @@ enum Endpoints {
               ]
         }
             
+
         var components = URLComponents(string: baseUrl + path)
         components?.queryItems = queryItems
         
